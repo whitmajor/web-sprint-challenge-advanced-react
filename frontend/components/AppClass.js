@@ -27,6 +27,7 @@ this.state= {
  email:"",
 }
 }
+
  handleUp =()=>{
   if(this.state.coordinatesY === 1){
     this.setState({
@@ -37,7 +38,8 @@ this.state= {
     this.setState({
       ...this.state,
       coordinatesY: this.state.coordinatesY-1,
-      totalMoves: this.state.totalMoves +1
+      totalMoves: this.state.totalMoves +1,
+      board:this.mapCoordinatesWithPosition(this.state.coordinatesX, this.state.coordinatesY -1)
     })
   }
 }
@@ -51,7 +53,8 @@ this.state= {
     this.setState({
       ...this.state,
       coordinatesY: this.state.coordinatesY +1,
-      totalMoves: this.state.totalMoves +1
+      totalMoves: this.state.totalMoves +1,
+      board: this.mapCoordinatesWithPosition(this.state.coordinatesX, this.state.coordinatesY +1)
     })
   }
 }
@@ -65,7 +68,8 @@ handleRight = ()=>{
     this.setState({
       ...this.state,
       coordinatesX: this.state.coordinatesX +1,
-      totalMoves: this.state.totalMoves +1
+      totalMoves: this.state.totalMoves +1,
+      board: this.mapCoordinatesWithPosition( this.state.coordinatesX +1,this.state.coordinatesY)
 
     });
   }
@@ -80,43 +84,47 @@ handleRight = ()=>{
     this.setState({
       ...this.state,
       coordinatesX: this.state.coordinatesX -1,
-      totalMoves: this.state.totalMoves +1
+      totalMoves: this.state.totalMoves +1,
+      board: this.mapCoordinatesWithPosition(this.state.coordinatesX -1,this.state.coordinatesY)
     })
   }
 }
 
-mapCoordinatesWithPosition = (index)=>{
-  console.log(index)
+mapCoordinatesWithPosition = (X,Y)=>{
+  console.log("this is the index:",X ,Y)
 
-  if(this.state.coordinatesX === 1 && this.state.coordinatesY === 1){
-    return true
+  if(X === 2 && Y === 1){
+    return ["","B","","","","","","","",]
   }
-  if(this.state.coordinatesX === 2&& this.state.coordinatesY ===1){
-    return true
+  if(X === 2 && Y === 2){
+    return ["","","","","B","","","","",]
   }
-  if(this.state.coordinatesX === 3 && this.state.coordinatesY ===1){
-    return true
+  if(X === 2 && Y === 3){
+    return ["","","","","","","","B","",]
   }
-  if(this.state.coordinatesX === 1 && this.state.coordinatesY ===2){
-    return true
+  if(X === 1 && Y === 1){
+    return ["B","","","","","","","","",]
   }
-  if(this.state.coordinatesX === 2 && this.state.coordinatesY ===2){
-    return true
+  if(X === 1 && Y === 2){
+    return ["","","","B","","","","","",]
   }
-  if(this.state.coordinatesX === 3 && this.state.coordinatesY ===2){
-    return true
+  if(X === 1 && Y === 3){
+    return ["","","","","","","B","","",]
   }
-  if(this.state.coordinatesX === 1 && this.state.coordinatesY ===3){
-    return true
+  if(X === 3 && Y === 1){
+    return ["","","B","","","","","","",]
   }
-  if(this.state.coordinatesX === 2 && this.state.coordinatesY ===3){
-    return true
+  if(X === 3 && Y === 2){
+    return ["","","","","","B","","","",]
   }
-  if(this.state.coordinatesX === 3 && this.state.coordinatesY ===3){
-    return true
-  }
+  if(X === 3 && Y === 3){
+    return ["","","","","","","","","B",]
+
+    }
 }
- reset = ()=>{
+
+
+ reset = () =>{
   this.setState({
     ...this.state,
     coordinatesX:2,
@@ -125,6 +133,7 @@ mapCoordinatesWithPosition = (index)=>{
     message: "",
     email: "",
     board: ["","","","","B","","","","",],
+   
   })
 }
 
@@ -184,7 +193,7 @@ onEmailChange = evt =>{
         <div className="info">
           <h3 id="coordinates">Coordinates ({this.state.coordinatesX},{this.state.coordinatesY})</h3>
           {
-            (this.state.totalMoves ===1 ) 
+            (this.state.totalMoves === 1 ) 
             ?<h3 id="steps">You moved {this.state.totalMoves} time</h3>
             : <h3 id="steps">You moved {this.state.totalMoves} times</h3>
              
@@ -193,14 +202,15 @@ onEmailChange = evt =>{
         <div id="grid">
 
           {this.state.board.map((value,index)=>{
-
-            if(this.mapCoordinatesWithPosition(index) === this.state.coordinatesX && this.state.coordinatesY){
+               console.log("this is the value: ", index)
+            if(value)
+            {
               return (
-                <div key = {index} className="square active">
+                <div key = {index} className="square active" >
                   B 
                   </div>
               )
-            }
+              }
 
             return (
               <div key={index} className = "square">
@@ -209,7 +219,7 @@ onEmailChange = evt =>{
             )
           })}
 
-         
+        
             </div>
             
               
