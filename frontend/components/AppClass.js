@@ -91,7 +91,7 @@ handleRight = ()=>{
 }
 
 mapCoordinatesWithPosition = (X,Y)=>{
-  console.log("this is the index:",X ,Y)
+  
 
   if(X === 2 && Y === 1){
     return ["","B","","","","","","","",]
@@ -202,7 +202,7 @@ onEmailChange = evt =>{
         <div id="grid">
 
           {this.state.board.map((value,index)=>{
-               console.log("this is the value: ", index)
+               
             if(value)
             {
               return (

@@ -13,7 +13,7 @@ coordinatesX: 2,
  totalMoves:0,
  board: ["","","","","B","","","","",],
  message:"",
- email:""
+ email:"",
   })
   
  const handleUp =()=>{
@@ -78,7 +78,7 @@ coordinatesX: 2,
     }
   }
  const mapCoordinatesWithPosition = (X,Y)=>{
-    console.log("this is the index:",X ,Y)
+   
   
     if(X === 2 && Y === 1){
       return ["","B","","","","","","","",]
@@ -109,6 +109,7 @@ coordinatesX: 2,
   
       }
   }
+
  const reset = () =>{
     setState({
       ...state,
@@ -140,12 +141,15 @@ coordinatesX: 2,
   
     axios.post(URL,payload)
     .then(res =>{
-   this.setState({...this.state, 
+      console.log(res)
+   setState({...state, 
     message: res.data.message, 
-    email: ""
+    email: "",
+    
   })
     })
     .catch(err =>{
+      console.log(err)
       console.log(err.response.data.message)
       setState({
       ...state,
@@ -170,7 +174,7 @@ coordinatesX: 2,
     <div id="grid">
 
       {state.board.map((value,index)=>{
-           console.log("this is the value: ", index)
+          
         if(value)
         {
           return (
@@ -189,7 +193,7 @@ coordinatesX: 2,
         </div>
       
       <div className="info">
-        <h3 id="message"></h3>
+        <h3 id="message">{state.message}</h3>
       </div>
       <div id="keypad">
         <button id="left" onClick = {handleLeft}>LEFT</button>
@@ -198,9 +202,17 @@ coordinatesX: 2,
         <button id="down" onClick = {handleDown}>DOWN</button>
         <button id="reset" onClick = {reset}>reset</button>
       </div>
-      <form>
-        <input id="email" type="email" placeholder="type email" onClick = {onEmailChange}></input>
-        <input id="submit" type="submit" onSubmit={handleSubmit}></input>
+      <form onSubmit ={handleSubmit}>
+
+        <input
+        value ={state.email}
+         id="email"
+         type="email"
+        placeholder="type email"
+         onChange = {onEmailChange}
+         >
+         </input>
+        <input id="submit" type="submit"></input>
       </form>
     </div>
   )
